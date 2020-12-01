@@ -5,7 +5,7 @@ document.onreadystatechange = () => {
         const brandName = document.querySelector("#brand");
         const modelName = document.querySelector("#model");
         const fuelType = document.querySelector("#fuel");
-        const cars = getCars();
+        var cars = getCars();
 
         let noDuplicates = clearDuplicateBrands(cars)
         showBrands(noDuplicates,brandName);
@@ -18,6 +18,8 @@ document.onreadystatechange = () => {
         
 
     }};
+
+    
 function bindUser(){
     console.log("aa");
 }
@@ -113,6 +115,8 @@ function showBrands(cars,brandName){
 }
 
 
+
+//Updates the dropdown list of models depending on the brand selection
 function showModels(brand){
 
     // Remove all previous model options every time there is a change
