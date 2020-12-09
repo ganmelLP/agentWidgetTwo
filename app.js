@@ -1,7 +1,7 @@
 
 document.onreadystatechange = () => {
     // document ready
-     if (document.readyState === 'complete') {
+    if (document.readyState === 'complete') {
         const brandName = document.querySelector("#brand");
         const modelName = document.querySelector("#model");
         const fuelType = document.querySelector("#fuel");
@@ -9,27 +9,28 @@ document.onreadystatechange = () => {
 
         //Clear duplicate brands to show brand list without duplicates
         let noDuplicates = clearDuplicateBrands(cars)
-        showBrands(noDuplicates,brandName);
+        showBrands(noDuplicates, brandName);
 
 
 
-        console.log(filterBrand(cars,"vauxhall"));
+        console.log(filterBrand(cars, "vauxhall"));
 
-        let filteredBrands = filterBrand(cars,"vauxhall");
-        console.log(filterModels(filteredBrands,"108 Top!"));
+        let filteredBrands = filterBrand(cars, "vauxhall");
+        console.log(filterModels(filteredBrands, "108 Top!"));
 
-        
 
-    }};
 
-    
-function bindUser(){
+    }
+};
+
+
+function bindUser() {
     console.log("aa");
 }
 
 
 
-function getCars(){
+function getCars() {
     return [
         {
             "short_name": "108",
@@ -68,50 +69,51 @@ function getCars(){
 
 
 // Returns objects only with the given brand
-function filterBrand(carsArray,brand) {
+function filterBrand(carsArray, brand) {
 
-     const filtered = carsArray.filter(car => {        
-        if (car.brand == brand){
+    const filtered = carsArray.filter(car => {
+        if (car.brand == brand) {
             return car.short_name;
         }
- });
+    });
 
-     return filtered; 
+    return filtered;
 }
 
 // Returns a single object with the given model
-function filterModels(carsArray,model) {
+function filterModels(carsArray, model) {
 
-    const filtered = carsArray.filter(car => {        
-       if (car.short_name == model){
-           return car.fuel_types;
-       }
-});
+    const filtered = carsArray.filter(car => {
+        if (car.short_name == model) {
+            return car.fuel_types;
+        }
+    });
 
-    return filtered; 
+    return filtered;
 }
 
 
-function clearSelections(clearOption){
+//Clears selections for the dropdown depending on the input to the function
+function clearSelections(clearOption) {
 
-    if (clearOption == "model" || clearOption == "all"){
-    // Remove all previous model options every time there is a change
-    let modelOptions = document.getElementsByClassName('model selection');
-        while(modelOptions[0]){
+    if (clearOption == "model" || clearOption == "all") {
+        // Remove all previous model options every time there is a change
+        let modelOptions = document.getElementsByClassName('model selection');
+        while (modelOptions[0]) {
             modelOptions[0].parentNode.removeChild(modelOptions[0]);
         }
     }
 
-    if (clearOption == "fuel" || clearOption == "all"){
-    // Remove all previous fuel options every time there is a change
-    let fuelOptions = document.getElementsByClassName('fuel selection');
-    while(fuelOptions[0]){
-        fuelOptions[0].parentNode.removeChild(fuelOptions[0]);
-     }
+    if (clearOption == "fuel" || clearOption == "all") {
+        // Remove all previous fuel options every time there is a change
+        let fuelOptions = document.getElementsByClassName('fuel selection');
+        while (fuelOptions[0]) {
+            fuelOptions[0].parentNode.removeChild(fuelOptions[0]);
+        }
     }
 }
 
-function radioCheck(value,isChecked){
+function radioCheck(value, isChecked) {
     const brandName = document.querySelector("#brand");
     const modelName = document.querySelector("#model");
     const fuelType = document.querySelector("#fuel");
@@ -120,7 +122,7 @@ function radioCheck(value,isChecked){
     const usedModelName = document.querySelector("#usedModel");
     const usedFuelType = document.querySelector("#usedFuel");
 
-    if(isChecked && value == "used"){
+    if (isChecked && value == "used") {
 
         brandName.style.display = "none";
         modelName.style.display = "none";
@@ -130,10 +132,10 @@ function radioCheck(value,isChecked){
         usedModelName.style.display = "block";
         usedFuelType.style.display = "block";
 
-        
+
     }
 
-    if(isChecked && value == "new"){
+    if (isChecked && value == "new") {
 
         brandName.style.display = "block";
         modelName.style.display = "block";
@@ -153,15 +155,15 @@ function clearDuplicateBrands(arr) {
 
 
     var filtered = arr.filter((arr, index, self) =>
-    index === self.findIndex((t) => (t.brand === arr.brand)))
+        index === self.findIndex((t) => (t.brand === arr.brand)))
 
     return filtered;
 }
 
 //Displays brand options in the drop down slection
-function showBrands(cars,brandName){
-       let option;
-    for (let i=0; i < cars.length; i++){
+function showBrands(cars, brandName) {
+    let option;
+    for (let i = 0; i < cars.length; i++) {
         option = document.createElement("option");
         option.text = cars[i].brand;
         brandName.add(option);
@@ -176,7 +178,7 @@ function showBrands(cars,brandName){
 
 
 //Updates the dropdown list of models depending on the brand selection
-function showModels(brand){
+function showModels(brand) {
 
     clearSelections("all");
 
@@ -188,10 +190,10 @@ function showModels(brand){
 
     // Get the full list and filter out only for the selected brand from the dropdown
     cars = getCars();
-    modelsForBrand =  filterBrand(cars,brand)
+    modelsForBrand = filterBrand(cars, brand)
 
     //Update models for selected brand
-    for (let i=0; i < modelsForBrand.length; i++){
+    for (let i = 0; i < modelsForBrand.length; i++) {
         option = document.createElement("option");
         option.text = modelsForBrand[i].short_name;
         modelName.add(option);
@@ -202,7 +204,7 @@ function showModels(brand){
 
 
 //Updates the dropdown list of fuel types depending on the model selection
-function showFuels(model){
+function showFuels(model) {
 
     clearSelections("fuel");
 
@@ -214,10 +216,10 @@ function showFuels(model){
 
     // Get the full list and filter out only for the selected model fuel types from the dropdown
     cars = getCars();
-    fuelForModel =  filterModels(cars,model)
+    fuelForModel = filterModels(cars, model)
     console.log(fuelForModel[0].fuel_types + "  FUEL MODEL 1");
     //Update fuel types for selected brand
-    for (let i=0; i < fuelForModel[0].fuel_types.length; i++){
+    for (let i = 0; i < fuelForModel[0].fuel_types.length; i++) {
         option = document.createElement("option");
         console.log(fuelForModel[0].fuel_types[i]);
         option.text = fuelForModel[0].fuel_types[i];
