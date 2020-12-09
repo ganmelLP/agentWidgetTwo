@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+.show{
+    display: block !important;
+}
+
+.hide{
+    display: none !important;
+}
+
+* {
+    font-size: 100%;
+    font-family: 'Roboto', sans-serif;
+   }
+
+   label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    margin-left: 36%;
+}

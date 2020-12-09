@@ -5,10 +5,13 @@ document.onreadystatechange = () => {
         const brandName = document.querySelector("#brand");
         const modelName = document.querySelector("#model");
         const fuelType = document.querySelector("#fuel");
-        var cars = getCars();
+        const cars = getCars();
 
+        //Clear duplicate brands to show brand list without duplicates
         let noDuplicates = clearDuplicateBrands(cars)
         showBrands(noDuplicates,brandName);
+
+
 
         console.log(filterBrand(cars,"vauxhall"));
 
@@ -46,7 +49,8 @@ function getCars(){
             "short_name": "104 TopStar!",
             "brand": "vauxhall",
             "fuel_types": [
-                "Petrol"
+                "Petrol",
+                "Diesel"
             ]
         },
         {
@@ -88,6 +92,61 @@ function filterModels(carsArray,model) {
 }
 
 
+function clearSelections(clearOption){
+
+    if (clearOption == "model" || clearOption == "all"){
+    // Remove all previous model options every time there is a change
+    let modelOptions = document.getElementsByClassName('model selection');
+        while(modelOptions[0]){
+            modelOptions[0].parentNode.removeChild(modelOptions[0]);
+        }
+    }
+
+    if (clearOption == "fuel" || clearOption == "all"){
+    // Remove all previous fuel options every time there is a change
+    let fuelOptions = document.getElementsByClassName('fuel selection');
+    while(fuelOptions[0]){
+        fuelOptions[0].parentNode.removeChild(fuelOptions[0]);
+     }
+    }
+}
+
+function radioCheck(value,isChecked){
+    const brandName = document.querySelector("#brand");
+    const modelName = document.querySelector("#model");
+    const fuelType = document.querySelector("#fuel");
+
+    const usedBrandName = document.querySelector("#usedBrand");
+    const usedModelName = document.querySelector("#usedModel");
+    const usedFuelType = document.querySelector("#usedFuel");
+
+    if(isChecked && value == "used"){
+
+        brandName.style.display = "none";
+        modelName.style.display = "none";
+        fuelType.style.display = "none";
+
+        usedBrandName.style.display = "block";
+        usedModelName.style.display = "block";
+        usedFuelType.style.display = "block";
+
+        
+    }
+
+    if(isChecked && value == "new"){
+
+        brandName.style.display = "block";
+        modelName.style.display = "block";
+        fuelType.style.display = "block";
+
+        usedBrandName.style.display = "none";
+        usedModelName.style.display = "none";
+        usedFuelType.style.display = "none";
+
+    }
+}
+
+
 
 // Clears duplicate brands for the showBrands function
 function clearDuplicateBrands(arr) {
@@ -119,12 +178,7 @@ function showBrands(cars,brandName){
 //Updates the dropdown list of models depending on the brand selection
 function showModels(brand){
 
-    // Remove all previous model options every time there is a change
-    let modelOptions = document.getElementsByClassName('model selection');
-        while(modelOptions[0]){
-            modelOptions[0].parentNode.removeChild(modelOptions[0]);
-        }
-
+    clearSelections("all");
 
     // Clear previous data on every change
     let modelsForBrand = [];
@@ -142,6 +196,33 @@ function showModels(brand){
         option.text = modelsForBrand[i].short_name;
         modelName.add(option);
         option.setAttribute("class", "model selection")
+    }
+}
+
+
+
+//Updates the dropdown list of fuel types depending on the model selection
+function showFuels(model){
+
+    clearSelections("fuel");
+
+    // Clear previous data on every change
+    let fuelForModel = [];
+    let cars = [];
+    let option;
+    const fuelType = document.querySelector("#fuel");
+
+    // Get the full list and filter out only for the selected model fuel types from the dropdown
+    cars = getCars();
+    fuelForModel =  filterModels(cars,model)
+    console.log(fuelForModel[0].fuel_types + "  FUEL MODEL 1");
+    //Update fuel types for selected brand
+    for (let i=0; i < fuelForModel[0].fuel_types.length; i++){
+        option = document.createElement("option");
+        console.log(fuelForModel[0].fuel_types[i]);
+        option.text = fuelForModel[0].fuel_types[i];
+        fuelType.add(option);
+        option.setAttribute("class", "fuel selection")
     }
 }
 
