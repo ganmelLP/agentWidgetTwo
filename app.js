@@ -1,4 +1,3 @@
-
 document.onreadystatechange = () => {
     // document ready
     if (document.readyState === 'complete') {
