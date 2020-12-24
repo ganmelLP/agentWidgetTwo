@@ -94,6 +94,8 @@ transition: color .30s ease-in-out,background-color .30s ease-in-out,border-colo
      border-width: 5px;
      border-style:hidden hidden hidden solid;
      color:white;
+     opacity: 1;
+
      
      /* background-image: url("https://www.robinsandday.co.uk/img/logo-on-white.webp");
      background-size: 200px; */
@@ -110,7 +112,7 @@ transition: color .30s ease-in-out,background-color .30s ease-in-out,border-colo
  .middle .box {
 	 width: 180px;
 	 height: 40px;
-	 background-color: #fff;
+     background-color: #fff;
 	 transition: all 250ms ease;
 	 will-change: transition;
 	 display: inline-block;
@@ -120,6 +122,8 @@ transition: color .30s ease-in-out,background-color .30s ease-in-out,border-colo
      font-weight: 900;
      border-radius: 0px;
      font-family:"foco_light",Helvetica,Arial,sans-serif;
+     opacity: 0.7;
+
 
 }
  .middle .box:active {
@@ -159,6 +163,7 @@ transition: color .30s ease-in-out,background-color .30s ease-in-out,border-colo
 	 font-weight: normal;
      color: white;
 
+
 }
  .middle .front-end span:before {
 	 content: "\f121";
@@ -179,7 +184,6 @@ transition: color .30s ease-in-out,background-color .30s ease-in-out,border-colo
 	 content: "\f0e7";
 	 font-family: FontAwesome;
      color: yellow;
-
 }
 @keyframes mymove {
     50% {background-size: 125px 125px;}
