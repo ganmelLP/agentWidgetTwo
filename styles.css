@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
-
 .show{
     display: block !important;
 }
@@ -10,7 +8,7 @@
 
 * {
     font-size: 100%;
-    font-family: 'Roboto', sans-serif;
+    font-family:"foco_light",Helvetica,Arial,sans-serif;
    }
 
    label {
@@ -18,3 +16,171 @@
     margin-bottom: .5rem;
     margin-left: 36%;
 }
+body{
+    background-color:#052452 !important;
+}
+.btn-primary  {
+    background-color: #133D5E !important;
+    border-color: #133D5E !important;
+}
+
+.btn-primary:hover, .btn-primary:active .btn-primary:visited{
+    background-color: #2e3a42 !important;
+}
+.btn{
+transition: color .30s ease-in-out,background-color .30s ease-in-out,border-color .30s ease-in-out,box-shadow .30s ease-in-out !important;
+}
+/* 
+.radio {
+    margin: 0.5rem;
+}
+.radio input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+.radio input[type="radio"] + .radio-label:before {
+    content: '';
+    background: #f4f4f4;
+    border-radius: 100%;
+    border: 1px solid #b4b4b4;
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    position: relative;
+    top: -0.2em;
+    margin-right: 1em;
+    vertical-align: top;
+    cursor: pointer;
+    text-align: center;
+    transition: all 250ms ease;
+}
+.radio input[type="radio"]:checked + .radio-label:before {
+    background-color: #3197ee;
+    box-shadow: inset 0 0 0 4px #f4f4f4;
+}
+.radio input[type="radio"]:focus + .radio-label:before {
+    outline: none;
+    border-color: #3197ee;
+}
+.radio input[type="radio"]:disabled + .radio-label:before {
+    box-shadow: inset 0 0 0 4px #f4f4f4;
+    border-color: #b4b4b4;
+    background: #b4b4b4;
+}
+.radio input[type="radio"] + .radio-label:empty:before {
+    margin-right: 0;
+} */
+
+ html {
+	 background-color: #1a1a1a;
+     overflow: hidden;
+     
+}
+ .middle {
+	 width: 100%;
+	 text-align: center;
+}
+ .middle h1 {
+     color: #fff;
+     font-family:"foco_light",Helvetica,Arial,sans-serif;
+
+}
+ .middle input[type="radio"] {
+	 display: none;
+}
+ .middle input[type="radio"]:checked + .box {
+     background-color:#133D5E; 
+     border-color: #ffffff;
+     border-width: 5px;
+     border-style:hidden hidden hidden solid;
+     color:white;
+     
+     /* background-image: url("https://www.robinsandday.co.uk/img/logo-on-white.webp");
+     background-size: 200px; */
+}
+ .middle input[type="radio"]:checked + .box span {
+	 color: white;
+     transform: translateY(70px);
+
+}
+ .middle input[type="radio"]:checked + .box span:before {
+	 transform: translateY(0px);
+	 opacity: 1;
+}
+ .middle .box {
+	 width: 180px;
+	 height: 40px;
+	 background-color: #fff;
+	 transition: all 250ms ease;
+	 will-change: transition;
+	 display: inline-block;
+	 text-align: center;
+	 cursor: pointer;
+	 position: relative;
+     font-weight: 900;
+     border-radius: 0px;
+     font-family:"foco_light",Helvetica,Arial,sans-serif;
+
+}
+ .middle .box:active {
+     transform: translateY(10px);
+}
+ .middle .box span {
+	 position: absolute;
+	 transform: translate(0, 60px);
+	 left: 0;
+	 right: 0;
+	 transition: all 300ms ease;
+	 font-size: 1.5em;
+	 user-select: none;
+     color: #f5c134;
+
+}
+
+.middle .box:after {
+    position: absolute;
+    transform: translate(0, 60px);
+    left: 0;
+    right: 0;
+    transition: all 300ms ease;
+    font-size: 1.5em;
+    user-select: none;
+    color: #f5c134;
+
+}
+
+
+ .middle .box span:before {
+	 font-size: 1.2em;
+	 display: block;
+	 transform: translateY(-80px);
+	 opacity: 0;
+	 transition: all 300ms ease-in-out;
+	 font-weight: normal;
+     color: white;
+
+}
+ .middle .front-end span:before {
+	 content: "\f121";
+}
+ .middle .back-end span:before {
+	 content: "\f0f4";
+}
+ .middle p {
+	 color: #fff;
+	 font-weight: 400;
+}
+ .middle p a {
+	 text-decoration: underline;
+	 font-weight: bold;
+	 color: #fff;
+}
+ .middle p span:after {
+	 content: "\f0e7";
+	 font-family: FontAwesome;
+     color: yellow;
+
+}
+@keyframes mymove {
+    50% {background-size: 125px 125px;}
+  }

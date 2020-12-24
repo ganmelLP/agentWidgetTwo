@@ -6,16 +6,22 @@ document.onreadystatechange = () => {
         const fuelType = document.querySelector("#fuel");
         const cars = getCars();
 
+
+        const usedBrandName = document.querySelector("#usedBrand");
+        const usedModelName = document.querySelector("#usedModel");
+        const usedCars = getUsedCars();
+
         //Clear duplicate brands to show brand list without duplicates
         let noDuplicates = clearDuplicateBrands(cars)
         showBrands(noDuplicates, brandName);
 
+        let noUsedDuplicates = clearDuplicateUsedBrands(usedCars)
+        showUsedBrands(noUsedDuplicates, usedBrandName);
 
+        // console.log(filterBrand(cars, "vauxhall"));
 
-        console.log(filterBrand(cars, "vauxhall"));
-
-        let filteredBrands = filterBrand(cars, "vauxhall");
-        console.log(filterModels(filteredBrands, "108 Top!"));
+        // let filteredBrands = filterBrand(cars, "vauxhall");
+        // console.log(filterModels(filteredBrands, "108 Top!"));
 
 
 
@@ -65,6 +71,32 @@ function getCars() {
 }
 
 
+function getUsedCars() {
+    return [
+        {
+            "manufacturer": "Citroen",
+            "model": "C1",
+            "count": 50
+        },
+        {
+            "manufacturer": "Citroen",
+            "model": "C3",
+            "count": 96
+        },
+        {
+            "manufacturer": "Citroen",
+            "model": "C3 Aircross",
+            "count": 58
+        },
+        {
+            "manufacturer": "Vauxhall",
+            "model": "DS 3006",
+            "count": 12
+        },
+    ];
+}
+
+
 
 
 // Returns objects only with the given brand
@@ -78,6 +110,19 @@ function filterBrand(carsArray, brand) {
 
     return filtered;
 }
+
+// Returns objects only with the given used brand
+function filterUsedBrand(carsArray, brand) {
+
+    const filtered = carsArray.filter(car => {
+        if (car.manufacturer == brand) {
+            return car.model;
+        }
+    });
+
+    return filtered;
+}
+
 
 // Returns a single object with the given model
 function filterModels(carsArray, model) {
@@ -113,13 +158,24 @@ function clearSelections(clearOption) {
 }
 
 function radioCheck(value, isChecked) {
+
+    // Reset form when radio button is selected and make sure to remember only the previous radio button selection
+    const newChecked = document.getElementById("new").checked;
+
+    document.getElementById('carForm').reset();
+
+    if(newChecked){
+        document.getElementById("new").checked = true;
+    } else{
+        document.getElementById("used").checked = true;
+    } // end of form reset form logic
+
     const brandName = document.querySelector("#brand");
     const modelName = document.querySelector("#model");
     const fuelType = document.querySelector("#fuel");
 
     const usedBrandName = document.querySelector("#usedBrand");
     const usedModelName = document.querySelector("#usedModel");
-    const usedFuelType = document.querySelector("#usedFuel");
 
     if (isChecked && value == "used") {
 
@@ -129,7 +185,6 @@ function radioCheck(value, isChecked) {
 
         usedBrandName.style.display = "block";
         usedModelName.style.display = "block";
-        usedFuelType.style.display = "block";
 
 
     }
@@ -142,8 +197,70 @@ function radioCheck(value, isChecked) {
 
         usedBrandName.style.display = "none";
         usedModelName.style.display = "none";
-        usedFuelType.style.display = "none";
 
+    }
+}
+
+
+function carSelectionValid() {
+    console.log("checking valid")
+    const brandName = document.querySelector("#brand");
+    const modelName = document.querySelector("#model");
+    const fuelType = document.querySelector("#fuel");
+
+    const usedBrandName = document.querySelector("#usedBrand");
+    const usedModelName = document.querySelector("#usedModel");
+
+    const isChecked = document.querySelector('input[name="carType"]:checked').value;
+    
+    if (isChecked == "used") {
+
+        brandName.setCustomValidity( '' );
+        modelName.setCustomValidity( '' );
+        fuelType.setCustomValidity( '' );
+
+        if (usedBrandName.value.indexOf("Select") > -1){
+            usedBrandName.setCustomValidity('You must choose a Brand');
+        }else
+        {
+            usedBrandName.setCustomValidity( '' );
+        }
+
+
+        if (usedModelName.value.indexOf("Select") > -1){
+            usedModelName.setCustomValidity('You must choose a Model');
+        }else
+        {
+            usedModelName.setCustomValidity( '' );
+        }
+    }
+
+    if (isChecked == "new") {
+
+        usedBrandName.setCustomValidity( '' );
+        usedModelName.setCustomValidity( '' );
+
+        if (brandName.value.indexOf("Select") > -1){
+            brandName.setCustomValidity('You must choose a Brand');
+        }else
+        {
+            brandName.setCustomValidity( '' );
+        }
+
+
+        if (modelName.value.indexOf("Select") > -1){
+            modelName.setCustomValidity('You must choose a Model');
+        }else
+        {
+            modelName.setCustomValidity( '' );
+        }
+
+        if (fuelType.value.indexOf("Select") > -1){
+            fuelType.setCustomValidity('You must choose a FuelType');
+        }else
+        {
+            fuelType.setCustomValidity( '' );
+        }
     }
 }
 
@@ -152,9 +269,17 @@ function radioCheck(value, isChecked) {
 // Clears duplicate brands for the showBrands function
 function clearDuplicateBrands(arr) {
 
-
     var filtered = arr.filter((arr, index, self) =>
         index === self.findIndex((t) => (t.brand === arr.brand)))
+
+    return filtered;
+}
+
+// Clears duplicate used brands for the showBrands function
+function clearDuplicateUsedBrands(arr) {
+
+    var filtered = arr.filter((arr, index, self) =>
+        index === self.findIndex((t) => (t.manufacturer === arr.manufacturer)))
 
     return filtered;
 }
@@ -165,6 +290,22 @@ function showBrands(cars, brandName) {
     for (let i = 0; i < cars.length; i++) {
         option = document.createElement("option");
         option.text = cars[i].brand;
+        brandName.add(option);
+        option.setAttribute("class", "brand selection")
+    }
+    option = document.createElement("option");
+    option.text = "other";
+    brandName.add(option);
+    option.setAttribute("class", "brand selection")
+}
+
+
+//Displays brand options in the drop down slection
+function showUsedBrands(cars, brandName) {
+    let option;
+    for (let i = 0; i < cars.length; i++) {
+        option = document.createElement("option");
+        option.text = cars[i].manufacturer;
         brandName.add(option);
         option.setAttribute("class", "brand selection")
     }
@@ -200,6 +341,30 @@ function showModels(brand) {
     }
 }
 
+//Updates the dropdown list of used models depending on the brand selection
+function showUsedModels(brand) {
+
+    clearSelections("all");
+
+    // Clear previous data on every change
+    let modelsForBrand = [];
+    let cars = [];
+    let option;
+    const modelName = document.querySelector("#usedModel");
+
+    // Get the full list and filter out only for the selected brand from the dropdown
+    cars = getUsedCars();
+    modelsForBrand = filterUsedBrand(cars, brand)
+
+    //Update models for selected brand
+    for (let i = 0; i < modelsForBrand.length; i++) {
+        option = document.createElement("option");
+        option.text = modelsForBrand[i].model + " - Current Stock: " + modelsForBrand[i].count;
+        modelName.add(option);
+        option.setAttribute("class", "model selection")
+    }
+}
+
 
 
 //Updates the dropdown list of fuel types depending on the model selection
@@ -225,6 +390,14 @@ function showFuels(model) {
         fuelType.add(option);
         option.setAttribute("class", "fuel selection")
     }
+}
+
+function collectFormData(){
+
+    var formResult = Object.fromEntries(new FormData(document.querySelector('form')).entries())
+ 
+    console.log(JSON.stringify(formResult));
+
 }
 
 

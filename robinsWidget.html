@@ -22,74 +22,85 @@
 
 </head>
 
-<body
-  background="https://images.unsplash.com/photo-1513205352338-335d8aee3f75?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1275&q=80">
-
-  <form class="needs-validation" novalidate>
+<!-- <body
+  background="https://images.unsplash.com/photo-1513205352338-335d8aee3f75?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1275&q=80"> -->
+</body>
+  <form class="needs-validation" id="carForm">
     <span class="mx-auto">
-      <div class="form-check form-check-inline" style="margin-left:15%;">
+      <div class="middle">
+      <div class="form-check form-check-inline" style="">
         <input onchange="radioCheck(this.value,this.checked)" class="form-check-input" type="radio" name="carType"
           id="new" value="new" checked>
-        <label class="form-check-label" for="new">
-          New
+        <label class="form-check-label front-end box" for="new">
+          New Vehicle
         </label>
       </div>
-      <div class="form-check form-check-inline" style="margin-left:20%;">
+      <div class="form-check form-check-inline" style="">
         <input onchange="radioCheck(this.value,this.checked)" class="form-check-input" type="radio" name="carType"
           id="used" value="used">
-        <label class="form-check-label" for="used">
-          Used
+        <label class="form-check-label back-end box" for="used">
+          Used Vehicle
         </label>
       </div>
+    </div>
     </span>
 
     <br>
     <br>
 
+    <!-- NEW VEHICLE OPTIONS -->
     <div class="form-group">
       <!-- <label for="brand">Please select a brand</label> -->
-      <select onchange="showModels(this.value)" value="Please select" class="form-control" id="brand">
+      <select onchange="showModels(this.value)" value="Please select" class="form-control" id="brand" name="brand" required>
         <option>Select Brand</option>
       </select>
     </div>
 
     <div class="form-group">
       <!-- <label for="model">Please select a Model</label> -->
-      <select onchange="showFuels(this.value)" class="form-control" value="Please select" id="model">
+      <select onchange="showFuels(this.value)" class="form-control" value="Please select" id="model" name="model" required>
         <option>Select Model</option>
       </select>
+      <!-- <input value="this.value" id="model"> -->
     </div>
-
 
     <div class="form-group">
       <!-- <label for="fuel">Please select a Fuel Type</label> -->
-      <select class="form-control" value="Please select" id="fuel">
+      <select class="form-control" value="Please select" id="fuel" name="fuel">
         <option>Select Fuel Type</option>
       </select>
     </div>
+    <!-- NEW VEHICLE OPTIONS END -->
+
+
+
+
+
+
+    <!-- USED VEHICLE OPTIONS -->
 
     <div class="form-group">
       <!-- <label for="brand">Please select a brand</label> -->
-      <input type="text" value="Enter Brand" class="form-control" id="usedBrand" style="display:none;">
+      <select onchange="showUsedModels(this.value)" type="text" value="Enter Brand" class="form-control" id="usedBrand" style="display:none;" name="usedBrand">
+        <option>Select Brand</option>
       </select>
     </div>
 
     <div class="form-group">
       <!-- <label for="model">Please select a Model</label> -->
-      <input type="text" class="form-control" value="Enter Model" id="usedModel" style="display:none;">
+      <select type="text" class="form-control" value="Enter Model" id="usedModel" style="display:none;" name="usedModel">
+        <option>Select Model</option>
       </select>
     </div>
+  
+ <!-- USED VEHICLE OPTIONS END -->
 
-    <div class="form-group">
-      <!-- <label for="fuel">Please select a Fuel Type</label> -->
-      <input type="text" class="form-control" value="Enter Fuel Type" id="usedFuel" style="display:none;">
-      </select>
-    </div>
+
 
     <div class="form-row">
       <div class="form-group col-sm-6">
         <label for="fName">Enter First Name</label>
-        <input type="text" class="form-control" id="fName" placeholder="First Name" required>
+        <input type="text" class="form-control" id="fName" placeholder="First Name" name="fName" required>
       </div>
 
       <div class="valid-feedback">
@@ -99,7 +110,7 @@
       <div class="form-group col-sm-6">
 
         <label for="lName">Enter Last Name</label>
-        <input type="text" class="form-control" id="lName" placeholder="Last Name" required>
+        <input type="text" class="form-control" id="lName" placeholder="Last Name" name="lName" required>
 
         <div class="valid-feedback">
           Looks good!
@@ -111,13 +122,13 @@
     <div class="form-group">
       <label for="email">Enter Email address</label>
       <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
-        required>
+      name="email" required>
     </div>
 
 
     <div class="form-group">
       <label for="channel">Preferred Channel</label>
-      <select class="form-control" value="Please select" id="channel" required>
+      <select class="form-control" value="Please select" id="channel" name="channel" required>
         <option>WhatsApp</option>
         <option>SMS</option>
         <option>Email</option>
@@ -128,12 +139,12 @@
     <div class="form-group">
       <label for="addInfo">Additional information</label>
       <textarea class="form-control" id="addInfo" rows="3"
-        placeholder="Any additional information from the consumer"></textarea>
+        placeholder="Any additional information from the consumer" name="addInfo"></textarea>
     </div>
 
     <br>
     <div class="form-row">
-      <button class="btn btn-primary btn-lg mx-auto" type="submit">Submit lead</button>
+      <button class="btn btn-primary btn-lg mx-auto" onclick="carSelectionValid()" type="submit">Submit lead</button>
     </div>
 
   </form>
@@ -149,9 +160,16 @@
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function (form) {
           form.addEventListener('submit', function (event) {
-            if (form.checkValidity() === false) {
+            if (form.checkValidity() === false ) {
+              
               event.preventDefault();
               event.stopPropagation();
+
+            } else if (form.checkValidity() === true){
+
+              console.log("Form is valid: " + form.checkValidity())
+              collectFormData(forms);
+
             }
             form.classList.add('was-validated');
           }, false);
@@ -159,6 +177,7 @@
       }, false);
     })();
   </script>
+
   <script>
 
 		// window.onload = function () {
@@ -166,8 +185,6 @@
 		// 		bindUser();
 		// 	}
 		// }
-
-
 
   </script>
 
