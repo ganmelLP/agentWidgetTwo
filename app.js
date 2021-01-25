@@ -1,101 +1,48 @@
+var usedCars = [];
+var newCars = [];
+
 document.onreadystatechange = () => {
     // document ready
     if (document.readyState === 'complete') {
-        const brandName = document.querySelector("#brand");
-        const modelName = document.querySelector("#model");
-        const fuelType = document.querySelector("#fuel");
-        const cars = getCars();
 
+        fetch('https://api-preprod.robinsandday.co.uk/api/used/available-options') // GET used cars list
+            .then(usedCarsResponse => usedCarsResponse.json())
+            .then(usedCarData => {
+                console.log(usedCarData)
+                usedCars = usedCarData;
 
-        const usedBrandName = document.querySelector("#usedBrand");
-        const usedModelName = document.querySelector("#usedModel");
-        const usedCars = getUsedCars();
+                fetch('https://api-preprod.robinsandday.co.uk/api/new/available-options') // when used cars request is done, GET new cars list and init all values
+                    .then(newCarResponse => newCarResponse.json()
+                        .then(newCarData => {
+                            console.log(newCarData)
+                            newCars = newCarData;
 
-        //Clear duplicate brands to show brand list without duplicates
-        let noDuplicates = clearDuplicateBrands(cars)
-        showBrands(noDuplicates, brandName);
+                            const brandName = document.querySelector("#brand");
+                            const modelName = document.querySelector("#model");
+                            const fuelType = document.querySelector("#fuel");
 
-        let noUsedDuplicates = clearDuplicateUsedBrands(usedCars)
-        showUsedBrands(noUsedDuplicates, usedBrandName);
+                            const usedBrandName = document.querySelector("#usedBrand");
+                            const usedModelName = document.querySelector("#usedModel");
 
-        // console.log(filterBrand(cars, "vauxhall"));
+                            //Clear duplicate brands to show brand list without duplicates
+                            let noDuplicates = clearDuplicateBrands(newCars)
+                            showBrands(noDuplicates, brandName);
 
-        // let filteredBrands = filterBrand(cars, "vauxhall");
-        // console.log(filterModels(filteredBrands, "108 Top!"));
+                            let noUsedDuplicates = clearDuplicateUsedBrands(usedCars)
+                            showUsedBrands(noUsedDuplicates, usedBrandName);
 
-
+                        }))
+            });
 
     }
+
 };
 
 
+
 function bindUser() {
-    console.log("aa");
+    console.log("Test");
 }
-
-
-
-function getCars() {
-    return [
-        {
-            "short_name": "108",
-            "brand": "peugeot",
-            "fuel_types": [
-                "Petrol"
-            ]
-        },
-        {
-            "short_name": "108 Top!",
-            "brand": "vauxhall",
-            "fuel_types": [
-                "Petrol"
-            ]
-        },
-        {
-            "short_name": "104 TopStar!",
-            "brand": "vauxhall",
-            "fuel_types": [
-                "Petrol",
-                "Diesel"
-            ]
-        },
-        {
-            "short_name": "3008 SUV",
-            "brand": "ds",
-            "fuel_types": [
-                "Petrol",
-                "Diesel"
-            ]
-        },
-    ];
-}
-
-
-function getUsedCars() {
-    return [
-        {
-            "manufacturer": "Citroen",
-            "model": "C1",
-            "count": 50
-        },
-        {
-            "manufacturer": "Citroen",
-            "model": "C3",
-            "count": 96
-        },
-        {
-            "manufacturer": "Citroen",
-            "model": "C3 Aircross",
-            "count": 58
-        },
-        {
-            "manufacturer": "Vauxhall",
-            "model": "DS 3006",
-            "count": 12
-        },
-    ];
-}
-
 
 
 
@@ -164,9 +111,9 @@ function radioCheck(value, isChecked) {
 
     document.getElementById('carForm').reset();
 
-    if(newChecked){
+    if (newChecked) {
         document.getElementById("new").checked = true;
-    } else{
+    } else {
         document.getElementById("used").checked = true;
     } // end of form reset form logic
 
@@ -212,54 +159,49 @@ function carSelectionValid() {
     const usedModelName = document.querySelector("#usedModel");
 
     const isChecked = document.querySelector('input[name="carType"]:checked').value;
-    
+
     if (isChecked == "used") {
 
-        brandName.setCustomValidity( '' );
-        modelName.setCustomValidity( '' );
-        fuelType.setCustomValidity( '' );
+        brandName.setCustomValidity('');
+        modelName.setCustomValidity('');
+        fuelType.setCustomValidity('');
 
-        if (usedBrandName.value.indexOf("Select") > -1){
+        if (usedBrandName.value.indexOf("Select") > -1) {
             usedBrandName.setCustomValidity('You must choose a Brand');
-        }else
-        {
-            usedBrandName.setCustomValidity( '' );
+        } else {
+            usedBrandName.setCustomValidity('');
         }
 
 
-        if (usedModelName.value.indexOf("Select") > -1){
+        if (usedModelName.value.indexOf("Select") > -1) {
             usedModelName.setCustomValidity('You must choose a Model');
-        }else
-        {
-            usedModelName.setCustomValidity( '' );
+        } else {
+            usedModelName.setCustomValidity('');
         }
     }
 
     if (isChecked == "new") {
 
-        usedBrandName.setCustomValidity( '' );
-        usedModelName.setCustomValidity( '' );
+        usedBrandName.setCustomValidity('');
+        usedModelName.setCustomValidity('');
 
-        if (brandName.value.indexOf("Select") > -1){
+        if (brandName.value.indexOf("Select") > -1) {
             brandName.setCustomValidity('You must choose a Brand');
-        }else
-        {
-            brandName.setCustomValidity( '' );
+        } else {
+            brandName.setCustomValidity('');
         }
 
 
-        if (modelName.value.indexOf("Select") > -1){
+        if (modelName.value.indexOf("Select") > -1) {
             modelName.setCustomValidity('You must choose a Model');
-        }else
-        {
-            modelName.setCustomValidity( '' );
+        } else {
+            modelName.setCustomValidity('');
         }
 
-        if (fuelType.value.indexOf("Select") > -1){
+        if (fuelType.value.indexOf("Select") > -1) {
             fuelType.setCustomValidity('You must choose a FuelType');
-        }else
-        {
-            fuelType.setCustomValidity( '' );
+        } else {
+            fuelType.setCustomValidity('');
         }
     }
 }
@@ -324,13 +266,11 @@ function showModels(brand) {
 
     // Clear previous data on every change
     let modelsForBrand = [];
-    let cars = [];
     let option;
     const modelName = document.querySelector("#model");
 
     // Get the full list and filter out only for the selected brand from the dropdown
-    cars = getCars();
-    modelsForBrand = filterBrand(cars, brand)
+    modelsForBrand = filterBrand(newCars, brand)
 
     //Update models for selected brand
     for (let i = 0; i < modelsForBrand.length; i++) {
@@ -348,13 +288,11 @@ function showUsedModels(brand) {
 
     // Clear previous data on every change
     let modelsForBrand = [];
-    let cars = [];
     let option;
     const modelName = document.querySelector("#usedModel");
 
     // Get the full list and filter out only for the selected brand from the dropdown
-    cars = getUsedCars();
-    modelsForBrand = filterUsedBrand(cars, brand)
+    modelsForBrand = filterUsedBrand(usedCars, brand)
 
     //Update models for selected brand
     for (let i = 0; i < modelsForBrand.length; i++) {
@@ -374,12 +312,11 @@ function showFuels(model) {
 
     // Clear previous data on every change
     let fuelForModel = [];
-    let cars = [];
     let option;
     const fuelType = document.querySelector("#fuel");
 
     // Get the full list and filter out only for the selected model fuel types from the dropdown
-    cars = getCars();
+    cars = newCars;
     fuelForModel = filterModels(cars, model)
     console.log(fuelForModel[0].fuel_types + "  FUEL MODEL 1");
     //Update fuel types for selected brand
@@ -392,10 +329,10 @@ function showFuels(model) {
     }
 }
 
-function collectFormData(){
+function collectFormData() {
 
     var formResult = Object.fromEntries(new FormData(document.querySelector('form')).entries())
- 
+
     console.log(JSON.stringify(formResult));
 
 }
@@ -427,27 +364,3 @@ function collectFormData(){
 // // authXHR.setRequestHeader("Access-Control-Allow-Origin","*");
 //  //authXHR.setRequestHeader("Access-Control-Allow-Methods","GET, POST, PATCH, PUT, DELETE, OPTIONS");
 // authXHR.send(data);
-
-// function getCarModels(token){
-// // Get car details
-// var data = null;
-
-// var modelGet = new XMLHttpRequest();
-// modelGet.withCredentials = false;
-
-// modelGet.addEventListener("readystatechange", function () {
-//   if (this.readyState === this.DONE) {
-//     console.log(this.responseText);
-//   }
-// });
-
-// modelGet.open("GET", "https://api-preprod.robinsandday.co.uk/api/used/available-options");
-// // modelGet.setRequestHeader("Access-Control-Allow-Headers","Origin, Content-Type, X-Auth-Token, Authorization");
-// // modelGet.setRequestHeader("Access-Control-Allow-Origin","*");
-//  modelGet.setRequestHeader("Access-Control-Allow-Methods","GET, POST, PATCH, PUT, DELETE, OPTIONS");
-
-// modelGet.setRequestHeader("Authorization", "Bearer "+ token);
-
-// modelGet.send(data);
-// }
-
