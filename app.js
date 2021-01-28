@@ -17,7 +17,7 @@ document.onreadystatechange = () => {
                             console.log(newCarData)
                             newCars = newCarData;
                             
-                            if (isEmpty == "true" ){
+                            if (isEmpty(SDEResult) == "true" ){
                             const brandName = document.querySelector("#brand");
                             const modelName = document.querySelector("#model");
                             const fuelType = document.querySelector("#fuel");
