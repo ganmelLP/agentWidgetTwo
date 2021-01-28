@@ -56,14 +56,14 @@ document.onreadystatechange = () => {
             try {
                 // optionBrand = document.createElement("option");
                 optionBrand = SDEResult.vehicleOfInterest[0].voi.make;
-                modelName.getElementsByTagName('option')[0].innerHTML = optionBrand;
-                modelName.getElementsByTagName('option')[0].setAttribute("class", "model selection")
+                brandName.getElementsByTagName('option')[0].innerHTML = optionBrand;
+                brandName.getElementsByTagName('option')[0].setAttribute("class", "brand selection")
 
 
                 // optionModel = document.createElement("option");
                 optionModel = SDEResult.vehicleOfInterest[0].voi.model;
-                brandName.getElementsByTagName('option')[0].innerHTML = optionModel;
-                brandName.getElementsByTagName('option')[0].setAttribute("class", "brand selection")
+                modelName.getElementsByTagName('option')[0].innerHTML = optionModel;
+                modelName.getElementsByTagName('option')[0].setAttribute("class", "model selection")
             } catch (e) {
                 console.error(e);
             }
