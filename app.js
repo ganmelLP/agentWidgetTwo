@@ -1,9 +1,16 @@
 var usedCars = [];
 var newCars = [];
 var SDEResult = {};
+
 document.onreadystatechange = () => {
     // document ready
     if (document.readyState === 'complete') {
+        const brandName = document.querySelector("#brand");
+        const modelName = document.querySelector("#model");
+        const fuelType = document.querySelector("#fuel");
+
+        const usedBrandName = document.querySelector("#usedBrand");
+        const usedModelName = document.querySelector("#usedModel");
 
         fetch('https://api-preprod.robinsandday.co.uk/api/used/available-options') // GET used cars list
             .then(usedCarsResponse => usedCarsResponse.json())
@@ -19,12 +26,12 @@ document.onreadystatechange = () => {
                             
                             if (isEmpty(SDEResult) == "true" ){
                             console.log("SDE NOT Loaded , taking API")
-                            const brandName = document.querySelector("#brand");
-                            const modelName = document.querySelector("#model");
-                            const fuelType = document.querySelector("#fuel");
+                            // const brandName = document.querySelector("#brand");
+                            // const modelName = document.querySelector("#model");
+                            // const fuelType = document.querySelector("#fuel");
 
-                            const usedBrandName = document.querySelector("#usedBrand");
-                            const usedModelName = document.querySelector("#usedModel");
+                            // const usedBrandName = document.querySelector("#usedBrand");
+                            // const usedModelName = document.querySelector("#usedModel");
 
                             //Clear duplicate brands to show brand list without duplicates
                             let noDuplicates = clearDuplicateBrands(newCars)
@@ -35,14 +42,14 @@ document.onreadystatechange = () => {
                             }
                             else {
                                     console.log("SDEs Loaded, taking them instead of API")
-                                    const modelName = document.querySelector("#model");
+                                    modelName = document.querySelector("#model");
 
                                     option = document.createElement("option");
                                     option.text = SDEResult.vehicleOfInterest[0].model;
                                     modelName.add(option);
                                     option.setAttribute("class", "model selection")
 
-                                    const brandName = document.querySelector("#brand");
+                                    brandName = document.querySelector("#brand");
 
                                     option = document.createElement("option");
                                     option.text = SDEResult.vehicleOfInterest[0].make;
