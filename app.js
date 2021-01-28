@@ -61,7 +61,7 @@ function bindUser() {
         visitorBlurredCallback: blurHandler
     });
 
-    var pathToData = "visitorInfo.visitorName";
+    var pathToData = "SDE.customerDetails";
 
     lpTag.agentSDK.bind(pathToData, updateCallback, notifyWhenDone);
 
