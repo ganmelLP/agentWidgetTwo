@@ -11,7 +11,7 @@ document.onreadystatechange = () => {
 
         const usedBrandName = document.querySelector("#usedBrand");
         const usedModelName = document.querySelector("#usedModel");
-        var delayInMilliseconds = 4000; //1 second
+        var delayInMilliseconds = 4000;
 
         setTimeout(function() {
           //your code to be executed after 1 second
