@@ -41,9 +41,52 @@ document.onreadystatechange = () => {
 
 
 function bindUser() {
-    console.log("Test");
+    console.log("SDK INIT");
+
+    var notificationHandler = function(data) {
+        console.log(data);
+        };
+    
+        var focusHandler = function() {
+            console.log("You are focused on the SDK");
+        };
+    
+        var blurHandler = function() {
+            console.log("You are NOT focused on the SDK");
+        };
+    
+        lpTag.agentSDK.init({
+        notificationCallback: notificationHandler,
+        visitorFocusedCallback: focusHandler,
+        visitorBlurredCallback: blurHandler
+    });
+
+    var pathToData = "visitorInfo.visitorName";
+
+    lpTag.agentSDK.bind(pathToData, updateCallback, notifyWhenDone);
+
+
 }
 
+
+    var updateCallback = function(data) {
+        // Do something with the returning data
+        var path = data.key;
+        var value = data.newValue;
+        // called each time the value is updated.
+        // If there's an existing value when bind is called - this callback
+        // will be called with the existing value
+        console.log(path);
+        console.log(value);
+    };
+
+    var notifyWhenDone = function(err) {
+        if (err) {
+            console.log(err);
+        }
+        // called when the bind is completed successfully,
+        // or when the action terminated with an error.
+};
 
 
 // Returns objects only with the given brand
