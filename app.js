@@ -53,7 +53,7 @@ document.onreadystatechange = () => {
                 });
 
         } else {
-            console.log("SDEs Loaded, taking them instead of API " + isEmpty(updateCallback()))
+            console.log("SDEs Loaded, taking them instead of API " + isEmpty(SDEResult))
             try {
                 // optionBrand = document.createElement("option");
                 optionBrand = SDEResult.vehicleOfInterest[0].voi.model;
