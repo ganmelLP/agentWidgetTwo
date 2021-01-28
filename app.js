@@ -42,7 +42,7 @@ document.onreadystatechange = () => {
                                     modelName.add(option);
                                     option.setAttribute("class", "model selection")
 
-                                    const modelName = document.querySelector("#brand");
+                                    const brandName = document.querySelector("#brand");
 
                                     option = document.createElement("option");
                                     option.text = SDEResult.vehicleOfInterest[0].make;
