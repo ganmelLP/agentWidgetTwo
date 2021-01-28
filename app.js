@@ -11,9 +11,12 @@ document.onreadystatechange = () => {
 
         const usedBrandName = document.querySelector("#usedBrand");
         const usedModelName = document.querySelector("#usedModel");
+        var delayInMilliseconds = 4000; //1 second
 
-
-        if (isEmpty(updateCallback()) == true) {
+        setTimeout(function() {
+          //your code to be executed after 1 second
+        
+        if (isEmpty(SDEResult) == true) {
             console.log("SDE NOT Loaded , taking API " + isEmpty(updateCallback()))
             fetch('https://api-preprod.robinsandday.co.uk/api/used/available-options') // GET used cars list
                 .then(usedCarsResponse => usedCarsResponse.json())
@@ -67,7 +70,7 @@ document.onreadystatechange = () => {
             }
 
         }
-
+    }, delayInMilliseconds);
     }
 
 };
