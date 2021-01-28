@@ -18,6 +18,7 @@ document.onreadystatechange = () => {
                             newCars = newCarData;
                             
                             if (isEmpty(SDEResult) == "true" ){
+                            console.log("SDE NOT Loaded , taking API")
                             const brandName = document.querySelector("#brand");
                             const modelName = document.querySelector("#model");
                             const fuelType = document.querySelector("#fuel");
@@ -33,7 +34,7 @@ document.onreadystatechange = () => {
                             showUsedBrands(noUsedDuplicates, usedBrandName);
                             }
                             else {
-
+                                    console.log("SDEs Loaded, taking them instead of API")
                                     const modelName = document.querySelector("#model");
 
                                     option = document.createElement("option");
