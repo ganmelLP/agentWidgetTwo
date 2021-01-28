@@ -17,7 +17,7 @@ document.onreadystatechange = () => {
           //your code to be executed after 1 second
         
         if (isEmpty(SDEResult) == true) {
-            console.log("SDE NOT Loaded , taking API " + isEmpty(SDEResult))
+            console.log("SDE NOT Loaded , taking API, is SDEResult empty?:" + isEmpty(SDEResult))
             fetch('https://api-preprod.robinsandday.co.uk/api/used/available-options') // GET used cars list
                 .then(usedCarsResponse => usedCarsResponse.json())
                 .then(usedCarData => {
@@ -52,18 +52,35 @@ document.onreadystatechange = () => {
                 });
 
         } else {
-            console.log("SDEs Loaded, taking them instead of API " + isEmpty(SDEResult))
+            console.log("SDEs Loaded, taking them instead of API, is SDEResult empty?:" + isEmpty(SDEResult))
             try {
-                // optionBrand = document.createElement("option");
+
+                if (SDEResult.vehicleOfInterest[0].voi.stockType == "NEW"){
+
                 optionBrand = SDEResult.vehicleOfInterest[0].voi.make;
                 brandName.getElementsByTagName('option')[0].innerHTML = optionBrand;
                 brandName.getElementsByTagName('option')[0].setAttribute("class", "brand selection")
 
 
-                // optionModel = document.createElement("option");
                 optionModel = SDEResult.vehicleOfInterest[0].voi.model;
                 modelName.getElementsByTagName('option')[0].innerHTML = optionModel;
                 modelName.getElementsByTagName('option')[0].setAttribute("class", "model selection")
+
+
+                optionFuel = SDEResult.vehicleOfInterest[0].voi.trim;
+                fuelType.getElementsByTagName('option')[0].innerHTML = optionFuel;
+                fuelType.getElementsByTagName('option')[0].setAttribute("class", "fuel selection")
+               } else {
+                optionBrand = SDEResult.vehicleOfInterest[0].voi.make;
+                usedBrandName.getElementsByTagName('option')[0].innerHTML = optionBrand;
+                usedBrandName.getElementsByTagName('option')[0].setAttribute("class", "brand selection")
+
+
+                optionModel = SDEResult.vehicleOfInterest[0].voi.model;
+                usedModelName.getElementsByTagName('option')[0].innerHTML = optionModel;
+                usedModelName.getElementsByTagName('option')[0].setAttribute("class", "model selection")
+                }
+
             } catch (e) {
                 console.error(e);
             }
