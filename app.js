@@ -1,6 +1,6 @@
 var usedCars = [];
 var newCars = [];
-
+var SDEResult = {};
 document.onreadystatechange = () => {
     // document ready
     if (document.readyState === 'complete') {
@@ -16,7 +16,8 @@ document.onreadystatechange = () => {
                         .then(newCarData => {
                             console.log(newCarData)
                             newCars = newCarData;
-
+                            
+                            if (isEmpty == "true" ){
                             const brandName = document.querySelector("#brand");
                             const modelName = document.querySelector("#model");
                             const fuelType = document.querySelector("#fuel");
@@ -30,6 +31,25 @@ document.onreadystatechange = () => {
 
                             let noUsedDuplicates = clearDuplicateUsedBrands(usedCars)
                             showUsedBrands(noUsedDuplicates, usedBrandName);
+                            }
+                            else {
+
+                                    const modelName = document.querySelector("#model");
+
+                                    option = document.createElement("option");
+                                    option.text = SDEResult.vehicleOfInterest[0].model;
+                                    modelName.add(option);
+                                    option.setAttribute("class", "model selection")
+
+                                    const modelName = document.querySelector("#brand");
+
+                                    option = document.createElement("option");
+                                    option.text = SDEResult.vehicleOfInterest[0].make;
+                                    modelName.add(option);
+                                    option.setAttribute("class", "model selection")
+
+                            }
+
 
                         }))
             });
@@ -38,7 +58,15 @@ document.onreadystatechange = () => {
 
 };
 
-
+function isEmpty(obj) {
+    for(var prop in obj) {
+      if(obj.hasOwnProperty(prop)) {
+        return false;
+      }
+    }
+  
+    return JSON.stringify(obj) === JSON.stringify({});
+  }
 
 function bindUser() {
     console.log("SDK INIT");
@@ -72,12 +100,12 @@ function bindUser() {
     var updateCallback = function(data) {
         // Do something with the returning data
         var path = data.key;
-        var value = data.newValue;
+        SDEResult = data.newValue;
         // called each time the value is updated.
         // If there's an existing value when bind is called - this callback
         // will be called with the existing value
         console.log(path);
-        console.log(value);
+        console.log(SDEResult);
     };
 
     var notifyWhenDone = function(err) {
