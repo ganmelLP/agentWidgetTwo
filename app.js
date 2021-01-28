@@ -12,87 +12,92 @@ document.onreadystatechange = () => {
         const usedBrandName = document.querySelector("#usedBrand");
         const usedModelName = document.querySelector("#usedModel");
 
-        fetch('https://api-preprod.robinsandday.co.uk/api/used/available-options') // GET used cars list
-            .then(usedCarsResponse => usedCarsResponse.json())
-            .then(usedCarData => {
-                console.log(usedCarData)
-                usedCars = usedCarData;
 
-                fetch('https://api-preprod.robinsandday.co.uk/api/new/available-options') // when used cars request is done, GET new cars list and init all values
-                    .then(newCarResponse => newCarResponse.json()
-                        .then(newCarData => {
-                            console.log(newCarData)
-                            newCars = newCarData;
-                            
-                            if (isEmpty(SDEResult) == true ){
-                            console.log("SDE NOT Loaded , taking API " + isEmpty(SDEResult))
-                            // const brandName = document.querySelector("#brand");
-                            // const modelName = document.querySelector("#model");
-                            // const fuelType = document.querySelector("#fuel");
+        if (isEmpty(updateCallback()) == true) {
+            console.log("SDE NOT Loaded , taking API " + isEmpty(updateCallback()))
+            fetch('https://api-preprod.robinsandday.co.uk/api/used/available-options') // GET used cars list
+                .then(usedCarsResponse => usedCarsResponse.json())
+                .then(usedCarData => {
+                    console.log(usedCarData)
+                    usedCars = usedCarData;
 
-                            // const usedBrandName = document.querySelector("#usedBrand");
-                            // const usedModelName = document.querySelector("#usedModel");
-
-                            //Clear duplicate brands to show brand list without duplicates
-                            let noDuplicates = clearDuplicateBrands(newCars)
-                            showBrands(noDuplicates, brandName);
-
-                            let noUsedDuplicates = clearDuplicateUsedBrands(usedCars)
-                            showUsedBrands(noUsedDuplicates, usedBrandName);
-                            }
-                            else {
-                                    console.log("SDEs Loaded, taking them instead of API " + isEmpty(SDEResult))
-                                try{
-                                   // optionBrand = document.createElement("option");
-                                    optionBrand = SDEResult.vehicleOfInterest[0].voi.model;
-                                    modelName.getElementsByTagName('option')[0].innerHTML = optionBrand;
-                                    modelName.getElementsByTagName('option')[0].setAttribute("class", "model selection")
+                    fetch('https://api-preprod.robinsandday.co.uk/api/new/available-options') // when used cars request is done, GET new cars list and init all values
+                        .then(newCarResponse => newCarResponse.json()
+                            .then(newCarData => {
+                                console.log(newCarData)
+                                newCars = newCarData;
 
 
-                                   // optionModel = document.createElement("option");
-                                    optionModel = SDEResult.vehicleOfInterest[0].voi.make;
-                                    brandName.getElementsByTagName('option')[0].innerHTML = optionBrand;
-                                    brandName.getElementsByTagName('option')[0].setAttribute("class", "brand selection")
-                                  }catch(e){
-                                        console.error(e);
-                                    }
+                                console.log("SDE NOT Loaded , taking API " + isEmpty(SDEResult))
+                                // const brandName = document.querySelector("#brand");
+                                // const modelName = document.querySelector("#model");
+                                // const fuelType = document.querySelector("#fuel");
 
-                            }
+                                // const usedBrandName = document.querySelector("#usedBrand");
+                                // const usedModelName = document.querySelector("#usedModel");
+
+                                //Clear duplicate brands to show brand list without duplicates
+                                let noDuplicates = clearDuplicateBrands(newCars)
+                                showBrands(noDuplicates, brandName);
+
+                                let noUsedDuplicates = clearDuplicateUsedBrands(usedCars)
+                                showUsedBrands(noUsedDuplicates, usedBrandName);
 
 
-                        }))
-            });
+
+
+                            }))
+                });
+
+        } else {
+            console.log("SDEs Loaded, taking them instead of API " + isEmpty(updateCallback()))
+            try {
+                // optionBrand = document.createElement("option");
+                optionBrand = SDEResult.vehicleOfInterest[0].voi.model;
+                modelName.getElementsByTagName('option')[0].innerHTML = optionBrand;
+                modelName.getElementsByTagName('option')[0].setAttribute("class", "model selection")
+
+
+                // optionModel = document.createElement("option");
+                optionModel = SDEResult.vehicleOfInterest[0].voi.make;
+                brandName.getElementsByTagName('option')[0].innerHTML = optionBrand;
+                brandName.getElementsByTagName('option')[0].setAttribute("class", "brand selection")
+            } catch (e) {
+                console.error(e);
+            }
+
+        }
 
     }
 
 };
 
 function isEmpty(obj) {
-    for(var prop in obj) {
-      if(obj.hasOwnProperty(prop)) {
-        return false;
-      }
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            return false;
+        }
     }
-  
+
     return JSON.stringify(obj) === JSON.stringify({});
-  }
+}
 
 function bindUser() {
     console.log("SDK INIT");
 
-    var notificationHandler = function(data) {
+    var notificationHandler = function (data) {
         console.log(data);
-        };
-    
-        var focusHandler = function() {
-            console.log("You are focused on the SDK");
-        };
-    
-        var blurHandler = function() {
-            console.log("You are NOT focused on the SDK");
-        };
-    
-        lpTag.agentSDK.init({
+    };
+
+    var focusHandler = function () {
+        console.log("You are focused on the SDK");
+    };
+
+    var blurHandler = function () {
+        console.log("You are NOT focused on the SDK");
+    };
+
+    lpTag.agentSDK.init({
         notificationCallback: notificationHandler,
         visitorFocusedCallback: focusHandler,
         visitorBlurredCallback: blurHandler
@@ -100,29 +105,30 @@ function bindUser() {
 
     var pathToData = "SDE";
 
-    lpTag.agentSDK.bind(pathToData, updateCallback, notifyWhenDone);
+    lpTag.agentSDK.get(pathToData, updateCallback, notifyWhenDone);
 
 
 }
 
 
-    var updateCallback = function(data) {
-        // Do something with the returning data
-        var path = data.key;
-        SDEResult = data.newValue;
-        // called each time the value is updated.
-        // If there's an existing value when bind is called - this callback
-        // will be called with the existing value
-        console.log(path);
-        console.log(SDEResult);
-    };
+var updateCallback = function (data) {
+    // Do something with the returning data
+    var path = data.key;
+    SDEResult = data.newValue;
+    // called each time the value is updated.
+    // If there's an existing value when bind is called - this callback
+    // will be called with the existing value
+    console.log(path);
+    console.log(SDEResult);
+    return SDEResult;
+};
 
-    var notifyWhenDone = function(err) {
-        if (err) {
-            console.log(err);
-        }
-        // called when the bind is completed successfully,
-        // or when the action terminated with an error.
+var notifyWhenDone = function (err) {
+    if (err) {
+        console.log(err);
+    }
+    // called when the bind is completed successfully,
+    // or when the action terminated with an error.
 };
 
 
