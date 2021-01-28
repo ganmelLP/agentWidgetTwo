@@ -121,7 +121,7 @@ var updateCallback = function (data) {
     // If there's an existing value when bind is called - this callback
     // will be called with the existing value
     console.log(path);
-    console.log("Result:" + SDEResult);
+    console.log("agentSDK Data Result: " + SDEResult);
 
 };
 
