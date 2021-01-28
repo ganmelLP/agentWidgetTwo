@@ -17,7 +17,7 @@ document.onreadystatechange = () => {
           //your code to be executed after 1 second
         
         if (isEmpty(SDEResult) == true) {
-            console.log("SDE NOT Loaded , taking API " + isEmpty(updateCallback()))
+            console.log("SDE NOT Loaded , taking API " + isEmpty(SDEResult))
             fetch('https://api-preprod.robinsandday.co.uk/api/used/available-options') // GET used cars list
                 .then(usedCarsResponse => usedCarsResponse.json())
                 .then(usedCarData => {
