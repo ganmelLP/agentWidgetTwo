@@ -51,8 +51,8 @@ document.onreadystatechange = () => {
 
                                     option = document.createElement("option");
                                     option.text = SDEResult.vehicleOfInterest[0].make;
-                                    modelName.add(option);
-                                    option.setAttribute("class", "model selection")
+                                    brandName.add(option);
+                                    option.setAttribute("class", "brand selection")
 
                             }
 
