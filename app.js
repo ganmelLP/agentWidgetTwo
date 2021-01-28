@@ -44,13 +44,13 @@ document.onreadystatechange = () => {
                                     console.log("SDEs Loaded, taking them instead of API " + isEmpty(SDEResult))
                                 try{
                                     option = document.createElement("option");
-                                    option.text = SDEResult.vehicleOfInterest[0].model;
+                                    option.text = SDEResult.vehicleOfInterest[0].voi.model;
                                     modelName.add(option);
                                     option.setAttribute("class", "model selection")
 
 
                                     option = document.createElement("option");
-                                    option.text = SDEResult.vehicleOfInterest[0].make;
+                                    option.text = SDEResult.vehicleOfInterest[0].voi.make;
                                     brandName.add(option);
                                     option.setAttribute("class", "brand selection")
                                   }catch(e){
