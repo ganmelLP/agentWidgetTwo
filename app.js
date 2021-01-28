@@ -71,6 +71,10 @@ document.onreadystatechange = () => {
                 fuelType.getElementsByTagName('option')[0].innerHTML = optionFuel;
                 fuelType.getElementsByTagName('option')[0].setAttribute("class", "fuel selection")
                } else {
+
+                document.getElementById("new").checked = false;
+                document.getElementById("new").checked = true;
+
                 optionBrand = SDEResult.vehicleOfInterest[0].voi.make;
                 usedBrandName.getElementsByTagName('option')[0].innerHTML = optionBrand;
                 usedBrandName.getElementsByTagName('option')[0].setAttribute("class", "brand selection")
