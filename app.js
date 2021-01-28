@@ -62,7 +62,7 @@ document.onreadystatechange = () => {
 
                 // optionModel = document.createElement("option");
                 optionModel = SDEResult.vehicleOfInterest[0].voi.make;
-                brandName.getElementsByTagName('option')[0].innerHTML = optionBrand;
+                brandName.getElementsByTagName('option')[0].innerHTML = optionModel;
                 brandName.getElementsByTagName('option')[0].setAttribute("class", "brand selection")
             } catch (e) {
                 console.error(e);
