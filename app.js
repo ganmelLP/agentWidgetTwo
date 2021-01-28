@@ -73,7 +73,7 @@ document.onreadystatechange = () => {
                } else {
 
                 document.getElementById("new").checked = false;
-                document.getElementById("new").checked = true;
+                document.getElementById("used").checked = true;
 
                 optionBrand = SDEResult.vehicleOfInterest[0].voi.make;
                 usedBrandName.getElementsByTagName('option')[0].innerHTML = optionBrand;
