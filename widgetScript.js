@@ -16,7 +16,7 @@ document.onreadystatechange = () => {
         setTimeout(function() {
           //your code to be executed after 1 second
         
-        if (isEmpty(SDEResult) == true) {
+        if (isEmpty(SDEResult) == true || SDEResult.vehicleOfInterest[0].voi.stockType) {
             console.log("SDE NOT Loaded , taking API, is SDEResult empty?:" + isEmpty(SDEResult))
             fetch('https://api-preprod.robinsandday.co.uk/api/used/available-options') // GET used cars list
                 .then(usedCarsResponse => usedCarsResponse.json())
